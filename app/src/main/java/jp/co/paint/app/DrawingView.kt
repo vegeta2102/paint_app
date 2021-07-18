@@ -6,6 +6,7 @@ import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
@@ -66,6 +67,7 @@ class DrawingView @JvmOverloads constructor(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+        Log.d("onSizeChanged", "$w, $h, $oldw, $oldh")
         canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         drawCanvas = Canvas(canvasBitmap!!)
     }

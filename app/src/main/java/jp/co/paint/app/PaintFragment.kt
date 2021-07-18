@@ -5,11 +5,13 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.FrameLayout
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.marginBottom
+import androidx.core.view.marginLeft
+import androidx.core.view.marginRight
+import androidx.core.view.marginTop
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -50,9 +52,14 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
             Log.d("BottomSheet onSlideWitdh", bottomSheet.height.toString())
             Log.d("BottomSheet getY", bottomSheet.y.toString())
             Log.d("Change", (bottomSheet.height * slideOffset).toInt().toString())
-            /*drawing_view.updateLayoutParams<CoordinatorLayout.LayoutParams> {
-                bottomMargin = (40 + (bottomSheet.height - 40) * slideOffset).toInt()
-            }*/
+            val params = CoordinatorLayout.LayoutParams(
+                CoordinatorLayout.LayoutParams.WRAP_CONTENT,
+                CoordinatorLayout.LayoutParams.WRAP_CONTENT
+            )
+            /*val bottomMargin = (40 + (bottomSheet.height - 40) * slideOffset).toInt()
+            params.setMargins(drawing_view.marginLeft, drawing_view.marginTop, drawing_view.marginRight, bottomMargin)
+            drawing_view.layoutParams = params
+            drawing_view.changeSize(((bottomSheet.height - 40) * slideOffset).toInt())*/
         }
 
         override fun onStateChanged(bottomSheet: View, newState: Int) {
