@@ -5,8 +5,12 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.marginBottom
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -14,6 +18,7 @@ import com.himanshurawat.imageworker.Extension
 import com.himanshurawat.imageworker.ImageWorker
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.paint.app.databinding.FragmentPaintBinding
+import kotlinx.android.synthetic.main.fragment_paint.*
 
 
 /**
@@ -44,6 +49,10 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
             Log.d("BottomSheet onSlide", slideOffset.toString())
             Log.d("BottomSheet onSlideWitdh", bottomSheet.height.toString())
             Log.d("BottomSheet getY", bottomSheet.y.toString())
+            Log.d("Change", (bottomSheet.height * slideOffset).toInt().toString())
+            /*drawing_view.updateLayoutParams<CoordinatorLayout.LayoutParams> {
+                bottomMargin = (40 + (bottomSheet.height - 40) * slideOffset).toInt()
+            }*/
         }
 
         override fun onStateChanged(bottomSheet: View, newState: Int) {
