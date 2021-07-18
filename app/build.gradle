@@ -1,0 +1,103 @@
+import dependencies.Dep
+import dependencies.Versions
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion Versions.androidCompileSdkVersion
+    buildToolsVersion Versions.androidBuildToolsVersion
+
+    defaultConfig {
+        applicationId "jp.co.paint.app"
+        minSdkVersion Versions.androidMinSdkVersion
+        targetSdkVersion Versions.androidTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        dataBinding true
+    }
+
+    lintOptions {
+        abortOnError false
+        checkDependencies true
+        ignoreTestSources true
+
+        disable 'ContentDescription'
+    }
+}
+
+dependencies {
+
+    implementation project(":feature:startup")
+    implementation project(":feature:model")
+    implementation project(":feature:repository")
+    implementation project(":feature:core")
+
+    implementation Dep.File.imageWorker
+    // Permission Dispatcher
+    implementation Dep.PermissionsDispatcher.permissionsDispatcher
+    kapt Dep.PermissionsDispatcher.processor
+
+    // Core
+    implementation Dep.Kotlin.stdlibJvm
+    implementation Dep.AndroidX.coreKtx
+    implementation Dep.AndroidX.appCompat
+    implementation Dep.AndroidX.design
+    implementation Dep.AndroidX.constraint
+
+    implementation Dep.AndroidX.lifecycleExtensions
+    implementation Dep.AndroidX.lifecycleLiveDataKtx
+    implementation Dep.AndroidX.lifecycleViewModelKtx
+    implementation Dep.AndroidX.lifecycleRuntimeKtx
+
+    // Navigation
+    implementation Dep.AndroidX.Navigation.common
+    implementation Dep.AndroidX.Navigation.commonKtx
+    implementation Dep.AndroidX.Navigation.fragment
+    implementation Dep.AndroidX.Navigation.fragmentKtx
+    implementation Dep.AndroidX.Navigation.ui
+    implementation Dep.AndroidX.Navigation.uiKtx
+    implementation Dep.AndroidX.Navigation.runtime
+    implementation Dep.AndroidX.Navigation.runtimeKtx
+
+    // Hilt-Dagger
+    implementation Dep.Dagger.hilt
+    implementation Dep.Dagger.hiltViewModel
+    kapt Dep.Dagger.hiltAndroidCompiler
+    kapt Dep.Dagger.hiltCompiler
+
+    // Test
+    testImplementation Dep.Test.JUnit.junit4
+    testImplementation Dep.Test.JUnit.api
+    testRuntimeOnly Dep.Test.JUnit.engine
+    testImplementation Dep.Test.JUnit.params
+    testImplementation Dep.Test.Mock.mockk
+    testImplementation Dep.Test.Mock.assertk
+    testImplementation Dep.Test.Mock.mockkAndroid
+    testImplementation Dep.Test.Spek.dsl
+    testImplementation Dep.Test.Spek.runner
+}

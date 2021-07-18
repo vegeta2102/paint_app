@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.dagger:hilt-core:2.30.1-alpha">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.dagger/hilt-core/2.30.1-alpha/fcd16341fbe2877ef0afb8638a4cc11c1fd45535/hilt-core-2.30.1-alpha.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.dagger/hilt-core/2.30.1-alpha/12e2a9b1a0033b3f6ea42d0ba595b3ba02fe521e/hilt-core-2.30.1-alpha-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.dagger/hilt-core/2.30.1-alpha/9e100329f62708312ea030a42c27cdb01dbdcc0e/hilt-core-2.30.1-alpha-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

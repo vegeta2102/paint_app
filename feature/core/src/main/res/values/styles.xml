@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppButton" parent="@style/Widget.AppCompat.Button">
+        <item name="android:background">@drawable/drawable_button</item>
+        <item name="android:textColor">@color/button_text_color</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+
+    <style name="AppButton.Outlined">
+        <item name="android:background">@drawable/drawable_button_outline</item>
+        <item name="android:textColor">@color/text_white</item>
+    </style>
+    <!--  bottom sheet dialog  -->
+    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_bottom_sheet</item>
+    </style>
+
+    <style name="BaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
+</resources>

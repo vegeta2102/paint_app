@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FIT.iml" filepath="$PROJECT_DIR$/.idea/modules/FIT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FIT.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FIT.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FIT.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/FIT.buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/FIT.feature.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/FIT.feature.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/core/FIT.feature.core.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/core/FIT.feature.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/model/FIT.feature.model.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/model/FIT.feature.model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/repository/FIT.feature.repository.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/repository/FIT.feature.repository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/startup/FIT.feature.startup.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/startup/FIT.feature.startup.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,6 @@
+include ':feature:model'
+include ':feature:repository'
+include ':feature:startup'
+include ':app'
+include ':feature:core'
+rootProject.name = "FIT"
