@@ -3,11 +3,13 @@ package jp.co.paint.app
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.himanshurawat.imageworker.Extension
 import com.himanshurawat.imageworker.ImageWorker
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,12 +29,30 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
         FragmentPaintBinding.bind(view).apply {
             lifecycleOwner = viewLifecycleOwner
             viewmodel = paintViewModel
+            BottomSheetBehavior.from(bottomSheet).apply {
+                this.state = BottomSheetBehavior.STATE_COLLAPSED
+                addBottomSheetCallback(bottomSheetCallback)
+            }
+
             initView(this)
         }
     }
 
+    private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
+
+        override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            Log.d("BottomSheet onSlide", slideOffset.toString())
+            Log.d("BottomSheet onSlideWitdh", bottomSheet.height.toString())
+            Log.d("BottomSheet getY", bottomSheet.y.toString())
+        }
+
+        override fun onStateChanged(bottomSheet: View, newState: Int) {
+            Log.d("BottomSheet", newState.toString())
+        }
+    }
+
     private fun initView(binding: FragmentPaintBinding) {
-        binding.undo.setOnClickListener {
+        /*binding.undo.setOnClickListener {
             binding.drawingView.setErase(isErase = true)
         }
         binding.save.setOnClickListener {
@@ -52,7 +72,7 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
             bitmap?.let {
                 binding.drawingView.loadFile(it)
             }
-        }
+        }*/
     }
 
     private fun saveFile(bitmap: Bitmap) {
