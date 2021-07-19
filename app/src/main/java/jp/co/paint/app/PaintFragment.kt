@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,6 +20,7 @@ import jp.co.paint.app.databinding.FragmentPaintBinding
 import jp.co.paint.model.ScreenSize
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.Exception
 
 
 /**
@@ -100,11 +102,16 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
     }
 
     private fun saveBitmapToStorage(bitmap: Bitmap) {
-        ImageWorker.to(requireContext())
-            .directory(PATH)
-            .setFileName(FILE_NAME)
-            .withExtension(Extension.PNG)
-            .save(bitmap, 85)
+        try {
+            ImageWorker.to(requireContext())
+                .directory(PATH)
+                .setFileName(FILE_NAME)
+                .withExtension(Extension.PNG)
+                .save(bitmap, 85)
+            Toast.makeText(requireContext(), "保存されました", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Log.e("Save Failure", "$e")
+        }
     }
 
     private fun loadBitmapFromStorage(): Bitmap? {
