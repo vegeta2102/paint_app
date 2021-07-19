@@ -24,7 +24,7 @@ class StartupViewModel @Inject constructor() : ViewModel() {
 
     fun initialize() {
         viewModelScope.launch {
-            delay(100L)
+            delay(3000L)
             Log.d(TAG, "Initialize finished")
             mutableInitFinished.postValue(Unit)
         }

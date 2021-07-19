@@ -71,6 +71,8 @@ dependencies {
     kapt Dep.Dagger.hiltAndroidCompiler
     kapt Dep.Dagger.hiltCompiler
 
+    implementation Dep.Amination.lottie
+
     // Test
     testImplementation Dep.Test.JUnit.junit4
     testImplementation Dep.Test.JUnit.api

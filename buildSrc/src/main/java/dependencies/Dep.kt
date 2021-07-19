@@ -128,6 +128,10 @@ object Dep {
         const val processor = "org.permissionsdispatcher:permissionsdispatcher-processor:4.8.0"
     }
 
+    object Amination {
+        const val lottie = "com.airbnb.android:lottie:3.4.0"
+    }
+
     object Test {
         object Mock {
             const val assertk = "com.willowtreeapps.assertk:assertk-jvm:0.22"
