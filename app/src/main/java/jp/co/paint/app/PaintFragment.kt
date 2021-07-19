@@ -43,7 +43,7 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
         super.onViewCreated(view, savedInstanceState)
         FragmentPaintBinding.bind(view).apply {
             lifecycleOwner = viewLifecycleOwner
-            viewmodel = paintViewModel
+            viewModel = paintViewModel
             BottomSheetBehavior.from(bottomSheet).apply {
                 this.state = BottomSheetBehavior.STATE_COLLAPSED
                 addBottomSheetCallback(bottomSheetCallback)
