@@ -67,7 +67,7 @@
                 android:onClick="@{() -> viewModel.startNew()}"
                 android:padding="8dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_clear_all"
+                android:src="@drawable/ic_delete"
                 app:layout_constraintEnd_toStartOf="@id/erase"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title" />
