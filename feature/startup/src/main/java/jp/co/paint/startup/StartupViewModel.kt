@@ -1,6 +1,5 @@
 package jp.co.paint.startup
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,10 +13,6 @@ import javax.inject.Inject
  */
 class StartupViewModel @Inject constructor() : ViewModel() {
 
-    companion object {
-        val TAG = StartupViewModel::class.simpleName
-    }
-
     private val mutableInitFinished = MutableLiveData<Unit>()
     val initFinished: LiveData<Unit>
         get() = mutableInitFinished
@@ -25,9 +20,7 @@ class StartupViewModel @Inject constructor() : ViewModel() {
     fun initialize() {
         viewModelScope.launch {
             delay(2000L)
-            Log.d(TAG, "Initialize finished")
             mutableInitFinished.postValue(Unit)
         }
     }
-
 }
