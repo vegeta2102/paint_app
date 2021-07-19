@@ -59,59 +59,42 @@
             </FrameLayout>
 
             <ImageButton
-                android:id="@+id/delete_all"
+                android:id="@+id/remove_icon"
                 style="@style/AppButton.Outlined"
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
-                android:onClick="@{() -> viewModel.startNew()}"
                 android:padding="8dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_delete"
-                app:layout_constraintEnd_toStartOf="@id/erase"
+                android:src="@drawable/ic_remove_icon"
+                app:layout_constraintEnd_toStartOf="@id/add_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title" />
 
             <ImageButton
-                android:id="@+id/erase"
+                android:id="@+id/add_icon"
                 style="@style/AppButton.Outlined"
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
-                android:onClick="@{() -> viewModel.erase()}"
                 android:padding="8dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_eraser"
-                app:layout_constraintEnd_toStartOf="@id/change_color"
-                app:layout_constraintStart_toEndOf="@id/delete_all"
+                android:src="@drawable/ic_add_icon"
+                app:layout_constraintEnd_toStartOf="@id/image_import"
+                app:layout_constraintStart_toEndOf="@id/remove_icon"
                 app:layout_constraintTop_toBottomOf="@id/title" />
 
             <ImageButton
-                android:id="@+id/change_color"
+                android:id="@+id/image_import"
                 style="@style/AppButton.Outlined"
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
-                android:onClick="@{() -> viewModel.changeColor()}"
                 android:padding="8dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_rgb"
-                app:layout_constraintEnd_toStartOf="@id/change_thickness"
-                app:layout_constraintStart_toEndOf="@id/erase"
-                app:layout_constraintTop_toBottomOf="@id/title" />
-
-            <ImageButton
-                android:id="@+id/change_thickness"
-                style="@style/AppButton.Outlined"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                android:layout_marginStart="8dp"
-                android:onClick="@{() -> viewModel.changeThickness()}"
-                android:padding="8dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_line_thickness"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/change_color"
+                android:src="@drawable/ic_image_import"
+                app:layout_constraintEnd_toStartOf="@id/save"
+                app:layout_constraintStart_toEndOf="@id/add_icon"
                 app:layout_constraintTop_toBottomOf="@id/title" />
 
             <ImageButton
@@ -120,57 +103,74 @@
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="20dp"
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_save"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/image_import"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/delete_all" />
-
-            <ImageButton
-                android:id="@+id/image_import"
-                style="@style/AppButton.Outlined"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:padding="8dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_image_import"
-                app:layout_constraintEnd_toStartOf="@id/add_icon"
-                app:layout_constraintStart_toEndOf="@id/save"
-                app:layout_constraintTop_toBottomOf="@id/delete_all" />
-
-            <ImageButton
-                android:id="@+id/add_icon"
-                style="@style/AppButton.Outlined"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:padding="8dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_add_icon"
-                app:layout_constraintEnd_toStartOf="@id/remove_icon"
-                app:layout_constraintStart_toEndOf="@id/image_import"
-                app:layout_constraintTop_toBottomOf="@id/delete_all" />
-
-            <ImageButton
-                android:id="@+id/remove_icon"
-                style="@style/AppButton.Outlined"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:padding="8dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_remove_icon"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/add_icon"
-                app:layout_constraintTop_toBottomOf="@id/delete_all" />
+                app:layout_constraintStart_toEndOf="@id/image_import"
+                app:layout_constraintTop_toBottomOf="@id/title" />
+
+            <ImageButton
+                android:id="@+id/eraser"
+                style="@style/AppButton.Outlined"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="20dp"
+                android:onClick="@{() -> viewModel.erase()}"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_eraser"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/change_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/remove_icon" />
+
+            <ImageButton
+                android:id="@+id/change_color"
+                style="@style/AppButton.Outlined"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:onClick="@{() -> viewModel.changeColor()}"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_rgb"
+                app:layout_constraintEnd_toStartOf="@id/change_thickness"
+                app:layout_constraintStart_toEndOf="@id/eraser"
+                app:layout_constraintTop_toBottomOf="@id/remove_icon" />
+
+            <ImageButton
+                android:id="@+id/change_thickness"
+                style="@style/AppButton.Outlined"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:onClick="@{() -> viewModel.changeThickness()}"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_line_thickness"
+                app:layout_constraintEnd_toStartOf="@id/delete_all"
+                app:layout_constraintStart_toEndOf="@id/change_color"
+                app:layout_constraintTop_toBottomOf="@id/remove_icon" />
+
+            <ImageButton
+                android:id="@+id/delete_all"
+                style="@style/AppButton.Outlined"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:onClick="@{() -> viewModel.startNew()}"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_delete"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/change_thickness"
+                app:layout_constraintTop_toBottomOf="@id/remove_icon" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
