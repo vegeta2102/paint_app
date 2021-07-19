@@ -8,6 +8,9 @@
 # Gradle generated files
 .gradle/
 
+/buildSrc/.gradle
+/buildSrc/build
+
 # Android Studio captures folder
 /captures
 
