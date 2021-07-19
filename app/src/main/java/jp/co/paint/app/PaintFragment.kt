@@ -15,12 +15,17 @@ import androidx.core.view.marginTop
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.himanshurawat.imageworker.Extension
 import com.himanshurawat.imageworker.ImageWorker
 import dagger.hilt.android.AndroidEntryPoint
+import jp.co.paint.DisplayInfoRepository
 import jp.co.paint.app.databinding.FragmentPaintBinding
+import jp.co.paint.model.ScreenSize
 import kotlinx.android.synthetic.main.fragment_paint.*
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 /**
@@ -30,6 +35,9 @@ import kotlinx.android.synthetic.main.fragment_paint.*
 class PaintFragment : Fragment(R.layout.fragment_paint) {
 
     private val paintViewModel: PaintViewModel by viewModels()
+
+    @Inject
+    lateinit var displayInfoRepository: DisplayInfoRepository
     private var checkIndex = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,18 +56,19 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
 
         override fun onSlide(bottomSheet: View, slideOffset: Float) {
-            Log.d("BottomSheet onSlide", slideOffset.toString())
-            Log.d("BottomSheet onSlideWitdh", bottomSheet.height.toString())
-            Log.d("BottomSheet getY", bottomSheet.y.toString())
-            Log.d("Change", (bottomSheet.height * slideOffset).toInt().toString())
-            val params = CoordinatorLayout.LayoutParams(
-                CoordinatorLayout.LayoutParams.WRAP_CONTENT,
-                CoordinatorLayout.LayoutParams.WRAP_CONTENT
-            )
-            /*val bottomMargin = (40 + (bottomSheet.height - 40) * slideOffset).toInt()
-            params.setMargins(drawing_view.marginLeft, drawing_view.marginTop, drawing_view.marginRight, bottomMargin)
-            drawing_view.layoutParams = params
-            drawing_view.changeSize(((bottomSheet.height - 40) * slideOffset).toInt())*/
+            val bottomMargin = (40 + (bottomSheet.height - 40) * slideOffset).toInt()
+            Log.d("TouchBottomMargin", "$bottomMargin")
+            lifecycleScope.launch {
+                displayInfoRepository.latestData?.let {
+                    displayInfoRepository.emit(
+                        ScreenSize(
+                            w = it.w,
+                            h = it.h,
+                            offset = bottomMargin
+                        )
+                    )
+                }
+            }
         }
 
         override fun onStateChanged(bottomSheet: View, newState: Int) {

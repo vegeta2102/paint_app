@@ -6,13 +6,18 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
+import jp.co.paint.DisplayInfoRepository
 import jp.co.paint.app.databinding.ActivityMainBinding
+import jp.co.paint.model.ScreenSize
 import jp.co.paint.startup.StartupViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -26,6 +31,9 @@ class MainActivity : AppCompatActivity() {
     private val mainViewModel: MainViewModel by viewModels()
 
     private lateinit var viewDataBinding: ActivityMainBinding
+
+    @Inject
+    lateinit var displayInfoRepository: DisplayInfoRepository
 
     private val navController: NavController by lazy {
         // https://stackoverflow.com/questions/58703451/fragmentcontainerview-as-navhostfragment
@@ -56,6 +64,14 @@ class MainActivity : AppCompatActivity() {
                     .create()
                     .show()
             }
+        }
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        Log.d("TouchScreen", "${main_layout.width}, ${main_layout.height}")
+        lifecycleScope.launch {
+            displayInfoRepository.emit(ScreenSize(w = main_layout.width, h = main_layout.height))
         }
     }
 }

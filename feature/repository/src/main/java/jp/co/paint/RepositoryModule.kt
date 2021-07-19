@@ -20,5 +20,11 @@ internal abstract class RepositoryModule {
         fun provideDialogMessageRepository(): DialogMessageRepository {
             return DialogMessageRepositoryImpl()
         }
+
+        @Provides
+        @Singleton
+        fun provideDisplayInfoRepository(): DisplayInfoRepository {
+            return DisplayInfoRepositoryImpl()
+        }
     }
 }

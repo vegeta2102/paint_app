@@ -6,19 +6,30 @@ import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.WithFragmentBindings
+import jp.co.paint.DisplayInfoRepository
+import javax.inject.Inject
 
 
 /**
  * Created by vegeta
  */
+@AndroidEntryPoint
+@WithFragmentBindings
 class DrawingView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
+
+    @Inject
+    lateinit var displayInfoRepository: DisplayInfoRepository
 
     // To hold the path that will be drawn.
     private val drawPath by lazy { Path() }
@@ -81,8 +92,16 @@ class DrawingView @JvmOverloads constructor(
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         // X and Y position of user touch.
+        val rawX = event.rawX
+        val rawY = event.rawY
         val touchX = event.x
         val touchY = event.y
+        Log.d("TouchRaw", "$rawX : $rawY")
+        val screenH = displayInfoRepository.latestData?.h ?: return false
+        val offset = displayInfoRepository.latestData?.offset ?: return false
+        if (screenH - offset < touchY) {
+            return false
+        }
         when (event.action) {
             MotionEvent.ACTION_DOWN -> drawPath.moveTo(touchX, touchY)
             MotionEvent.ACTION_MOVE -> drawPath.lineTo(touchX, touchY)

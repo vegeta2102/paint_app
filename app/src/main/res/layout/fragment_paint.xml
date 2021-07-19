@@ -10,7 +10,7 @@
             type="jp.co.paint.app.PaintViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_white">
@@ -21,5 +21,59 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="40dp"
             android:background="@color/bg_white" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/drawable_background_bottomsheet"
+            android:clickable="false"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="40dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+            <FrameLayout
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:text="----"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="save"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title" />
+
+            <Button
+                android:id="@+id/erase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="save"
+                app:layout_constraintStart_toEndOf="@id/save"
+                app:layout_constraintTop_toBottomOf="@id/title" />
+
+            <Button
+                android:id="@+id/newfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="save"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/save" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
