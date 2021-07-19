@@ -27,6 +27,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PaintFragment : Fragment(R.layout.fragment_paint) {
 
+    companion object {
+        const val PATH = "paint"
+        const val FILE_NAME = "paint_20210730"
+    }
+
     private val paintViewModel: PaintViewModel by viewModels()
 
     @Inject
@@ -79,36 +84,35 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
             requestChangeThickness.observe(viewLifecycleOwner) {
                 showChangeThicknessAlertDialog(binding)
             }
-        }
-        /*binding.undo.setOnClickListener {
-            binding.drawingView.setErase(isErase = true)
-        }
-        binding.save.setOnClickListener {
-            getBitmapFromView(binding.drawingView)?.let { bitmap ->
-                saveFile(bitmap = bitmap)
+
+            requestSaveImage.observe(viewLifecycleOwner) {
+                getBitmapFromView(binding.drawingView)?.let {
+                    saveBitmapToStorage(it)
+                }
+            }
+
+            requestLoadImage.observe(viewLifecycleOwner) {
+                loadBitmapFromStorage()?.let {
+                    binding.drawingView.loadFile(it)
+                }
             }
         }
-        binding.fab.setOnClickListener {
-            showAlertDialog(binding)
-        }
-        binding.importImage.setOnClickListener {
-            val bitmap = ImageWorker.from(requireContext())
-                .directory("paint")
-                .setFileName("test")
-                .withExtension(Extension.PNG)
-                .load()
-            bitmap?.let {
-                binding.drawingView.loadFile(it)
-            }
-        }*/
     }
 
-    private fun saveFile(bitmap: Bitmap) {
+    private fun saveBitmapToStorage(bitmap: Bitmap) {
         ImageWorker.to(requireContext())
-            .directory("paint")
-            .setFileName("test")
+            .directory(PATH)
+            .setFileName(FILE_NAME)
             .withExtension(Extension.PNG)
             .save(bitmap, 85)
+    }
+
+    private fun loadBitmapFromStorage(): Bitmap? {
+        return ImageWorker.from(requireContext())
+            .directory(PATH)
+            .setFileName(FILE_NAME)
+            .withExtension(Extension.PNG)
+            .load()
     }
 
     private fun getBitmapFromView(view: View): Bitmap? {

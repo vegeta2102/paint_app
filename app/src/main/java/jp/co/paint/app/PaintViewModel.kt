@@ -1,6 +1,9 @@
 package jp.co.paint.app
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -28,9 +31,18 @@ class PaintViewModel @ViewModelInject constructor() : ViewModel() {
     val requestChangeThickness: LiveData<Unit>
         get() = _requestChangeThickness
 
+    private val _requestSaveImage = MutableLiveData<Unit>()
+    val requestSaveImage: LiveData<Unit>
+        get() = _requestSaveImage
+
+    private val _requestLoadImage = MutableLiveData<Unit>()
+    val requestLoadImage: LiveData<Unit>
+        get() = _requestLoadImage
+
     fun bind(drawingView: DrawingView) {
         drawingViewHolder = drawingView
         _guidanceText.postValue("ペイント")
+        loadImage()
     }
 
     fun erase() {
@@ -56,6 +68,14 @@ class PaintViewModel @ViewModelInject constructor() : ViewModel() {
 
     fun changeThickness() {
         _requestChangeThickness.postValue(Unit)
+    }
+
+    fun saveImage() {
+        _requestSaveImage.postValue(Unit)
+    }
+
+    fun loadImage() {
+        _requestLoadImage.postValue(Unit)
     }
 
     override fun onCleared() {
