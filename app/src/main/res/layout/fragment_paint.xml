@@ -47,6 +47,15 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/drawable_view_open_close"
                     android:textSize="22sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:text="@{viewModel.guidanceText}"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    tools:text="AAAAdsfasfa" />
             </FrameLayout>
 
             <ImageButton
@@ -55,6 +64,7 @@
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
+                android:onClick="@{() -> viewModel.startNew()}"
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_clear_all"
@@ -68,6 +78,7 @@
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
+                android:onClick="@{() -> viewModel.erase()}"
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_eraser"
@@ -81,6 +92,7 @@
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
+                android:onClick="@{() -> viewModel.changeColor()}"
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_rgb"
@@ -94,6 +106,7 @@
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
+                android:onClick="@{() -> viewModel.changeThickness()}"
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_line_thickness"

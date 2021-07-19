@@ -71,9 +71,9 @@ class DrawingView @JvmOverloads constructor(
         drawPaint.strokeJoin = Paint.Join.ROUND
         drawPaint.strokeCap = Paint.Cap.ROUND
         // Initial brush size is medium.
-        brushSize = resources.getInteger(R.integer.medium_size).toFloat()
+        brushSize = resources.getInteger(R.integer.small_size).toFloat()
         lastBrushSize = brushSize
-        drawPaint.strokeWidth = brushSize
+        setBrushSize(brushSize)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {

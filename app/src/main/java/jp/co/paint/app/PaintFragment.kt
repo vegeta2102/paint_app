@@ -5,17 +5,11 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.marginLeft
-import androidx.core.view.marginRight
-import androidx.core.view.marginTop
-import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.himanshurawat.imageworker.Extension
 import com.himanshurawat.imageworker.ImageWorker
@@ -23,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.co.paint.DisplayInfoRepository
 import jp.co.paint.app.databinding.FragmentPaintBinding
 import jp.co.paint.model.ScreenSize
-import kotlinx.android.synthetic.main.fragment_paint.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,7 +31,8 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
 
     @Inject
     lateinit var displayInfoRepository: DisplayInfoRepository
-    private var checkIndex = 0
+    private var colorSelectedHolder = 0
+    private var thicknessSelectedHolder = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FragmentPaintBinding.bind(view).apply {
@@ -48,8 +42,8 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
                 this.state = BottomSheetBehavior.STATE_COLLAPSED
                 addBottomSheetCallback(bottomSheetCallback)
             }
-
-            initView(this)
+            paintViewModel.bind(this.drawingView)
+            observeViewModel(this)
         }
     }
 
@@ -76,7 +70,16 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
         }
     }
 
-    private fun initView(binding: FragmentPaintBinding) {
+    private fun observeViewModel(binding: FragmentPaintBinding) {
+        with(paintViewModel) {
+            requestChangeColor.observe(viewLifecycleOwner) {
+                showChangeColorAlertDialog(binding)
+            }
+
+            requestChangeThickness.observe(viewLifecycleOwner) {
+                showChangeThicknessAlertDialog(binding)
+            }
+        }
         /*binding.undo.setOnClickListener {
             binding.drawingView.setErase(isErase = true)
         }
@@ -115,31 +118,60 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
         return bitmap
     }
 
-    private fun showAlertDialog(binding: FragmentPaintBinding) {
+    private fun showChangeColorAlertDialog(binding: FragmentPaintBinding) {
         val items = arrayOf("黒", "青", "赤", "黄")
         val alertDialog = AlertDialog.Builder(requireContext()).apply {
             setTitle("色を選びなさい")
-            setSingleChoiceItems(items, checkIndex) { dialogInterface, index ->
+            setSingleChoiceItems(items, colorSelectedHolder) { dialogInterface, index ->
                 when (index) {
                     0 -> {
-                        Toast.makeText(requireContext(), "Tap black", Toast.LENGTH_SHORT).show()
                         binding.drawingView.setColor(R.color.black)
-                        checkIndex = 0
+                        colorSelectedHolder = 0
                     }
                     1 -> {
-                        Toast.makeText(requireContext(), "Tap blue", Toast.LENGTH_SHORT).show()
                         binding.drawingView.setColor(R.color.bg_blue)
-                        checkIndex = 1
+                        colorSelectedHolder = 1
                     }
                     2 -> {
-                        Toast.makeText(requireContext(), "Tap red", Toast.LENGTH_SHORT).show()
                         binding.drawingView.setColor(R.color.bg_red)
-                        checkIndex = 2
+                        colorSelectedHolder = 2
                     }
                     3 -> {
-                        Toast.makeText(requireContext(), "Tap yellow", Toast.LENGTH_SHORT).show()
                         binding.drawingView.setColor(R.color.bg_yellow)
-                        checkIndex = 3
+                        colorSelectedHolder = 3
+                    }
+                }
+                dialogInterface.dismiss()
+            }
+        }
+        alertDialog.create().apply {
+            setCanceledOnTouchOutside(false)
+        }.show()
+    }
+
+    private fun showChangeThicknessAlertDialog(binding: FragmentPaintBinding) {
+        val items = arrayOf("小", "中", "大")
+        val alertDialog = AlertDialog.Builder(requireContext()).apply {
+            setTitle("ペンの太さを選びなさい")
+            setSingleChoiceItems(items, thicknessSelectedHolder) { dialogInterface, index ->
+                when (index) {
+                    0 -> {
+                        binding.drawingView.setBrushSize(
+                            resources.getInteger(R.integer.small_size).toFloat()
+                        )
+                        thicknessSelectedHolder = 0
+                    }
+                    1 -> {
+                        binding.drawingView.setBrushSize(
+                            resources.getInteger(R.integer.medium_size).toFloat()
+                        )
+                        thicknessSelectedHolder = 1
+                    }
+                    2 -> {
+                        binding.drawingView.setBrushSize(
+                            resources.getInteger(R.integer.large_size).toFloat()
+                        )
+                        thicknessSelectedHolder = 2
                     }
                 }
                 dialogInterface.dismiss()
