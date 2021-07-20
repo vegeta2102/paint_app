@@ -20,6 +20,7 @@ import jp.co.paint.DisplayInfoRepository
 import jp.co.paint.MovingBitmapRepository
 import jp.co.paint.TomatoStateStorePref
 import jp.co.paint.app.databinding.FragmentPaintBinding
+import jp.co.paint.core.extentions.Visibility
 import jp.co.paint.core.extentions.margin
 import jp.co.paint.core.extentions.toDp
 import jp.co.paint.core.extentions.toPx
@@ -114,9 +115,23 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
                     binding.drawingView.loadFile(it)
                 }
             }
+
+            tomatoVisibility.observe(viewLifecycleOwner) {
+                when (it) {
+                    Visibility.VISIBLE -> {
+                        binding.movableView.margin(
+                            left = tomatoStateStorePref.tomatoState?.posX,
+                            top = tomatoStateStorePref.tomatoState?.posY,
+                        )
+                    }
+                    else -> {
+                        // Do nothing
+                    }
+                }
+            }
         }
 
-        movingBitmapRepository.isTouch.distinctUntilChanged().observe(viewLifecycleOwner) {
+        movingBitmapRepository.isTouch.observe(viewLifecycleOwner) {
             binding.movableView.margin(0F, 0F, 0F, 40F.toDp().toFloat())
         }
     }

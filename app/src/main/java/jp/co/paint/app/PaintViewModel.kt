@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import jp.co.paint.TomatoStateStorePref
 import jp.co.paint.core.extentions.Visibility
+import jp.co.paint.core.extentions.margin
 import jp.co.paint.model.TomatoState
 
 /**
@@ -45,12 +46,13 @@ class PaintViewModel @ViewModelInject constructor(
     val tomatoVisibility: LiveData<Visibility>
         get() = _tomatoVisibility
 
+    private val _requestRemoveTomato = MutableLiveData<Unit>()
+    val requestRemoveTomato: LiveData<Unit>
+        get() = _requestRemoveTomato
+
     fun bind(drawingView: DrawingView) {
         drawingViewHolder = drawingView
         _guidanceText.postValue("ペイント")
-        if (tomatoStateStorePref.tomatoState != null) {
-            _tomatoVisibility.postValue(Visibility.VISIBLE)
-        }
         loadImage()
     }
 
@@ -87,6 +89,24 @@ class PaintViewModel @ViewModelInject constructor(
 
     fun loadImage() {
         _requestLoadImage.postValue(Unit)
+        tomatoStateStorePref.tomatoState?.let {
+            _tomatoVisibility.postValue(Visibility.VISIBLE)
+        }
+    }
+
+    fun addTomato() {
+        val view = drawingViewHolder ?: return
+        tomatoStateStorePref.tomatoState = tomatoStateStorePref.tomatoState ?: TomatoState(
+            isRemoved = false,
+            posX = view.width.div(2F),
+            posY = view.height.div(2F)
+        )
+        _tomatoVisibility.postValue(Visibility.VISIBLE)
+    }
+
+    fun removeTomato() {
+        tomatoStateStorePref.tomatoState = tomatoStateStorePref.tomatoState
+        _tomatoVisibility.postValue(Visibility.GONE)
     }
 
     override fun onCleared() {

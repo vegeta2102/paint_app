@@ -111,7 +111,8 @@ class MovableFrameLayoutButton @JvmOverloads constructor(
                         )
                     view.animate().x(newX).y(newY).setDuration(0).start()
                     Log.d("MovableStateConvert", "X: ${newX}, Y: $newY")
-                    tomatoStateStorePref.tomatoState = TomatoState(posX = newX, posY = newY)
+                    tomatoStateStorePref.tomatoState =
+                        TomatoState(posX = newX, posY = newY, isRemoved = false)
                     true
                 }
                 else -> {
