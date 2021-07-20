@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import jp.co.paint.TomatoStateStorePref
 import jp.co.paint.core.extentions.Visibility
-import jp.co.paint.core.extentions.margin
 import jp.co.paint.model.TomatoState
 
 /**
