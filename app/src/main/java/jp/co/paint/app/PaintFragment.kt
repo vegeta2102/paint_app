@@ -117,7 +117,7 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
         }
 
         movingBitmapRepository.isTouch.distinctUntilChanged().observe(viewLifecycleOwner) {
-            binding.movableView.margin(0F, 0F, 0F, 40F)
+            binding.movableView.margin(0F, 0F, 0F, 40F.toDp().toFloat())
         }
     }
 
