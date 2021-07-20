@@ -90,6 +90,13 @@ dependencies {
     kapt Dep.Dagger.hiltAndroidCompiler
     kapt Dep.Dagger.hiltCompiler
 
+    // KotPref
+    implementation Dep.Kotpref.kotpref
+    implementation Dep.Kotpref.gsonSupport
+    implementation Dep.Kotpref.enumSupport
+
+    implementation Dep.gson
+
     // Test
     testImplementation Dep.Test.JUnit.junit4
     testImplementation Dep.Test.JUnit.api

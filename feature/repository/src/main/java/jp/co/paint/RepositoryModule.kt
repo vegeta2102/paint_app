@@ -26,5 +26,17 @@ internal abstract class RepositoryModule {
         fun provideDisplayInfoRepository(): DisplayInfoRepository {
             return DisplayInfoRepositoryImpl()
         }
+
+        @Provides
+        @Singleton
+        fun provideTomatoStateStorePref(): TomatoStateStorePref {
+            return TomatoStateStorePref()
+        }
+
+        @Provides
+        @Singleton
+        fun provideMovingBitmapRepository(): MovingBitmapRepository {
+            return MovingBitmapRepositoryImpl()
+        }
     }
 }

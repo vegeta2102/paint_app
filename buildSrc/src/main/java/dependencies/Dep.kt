@@ -118,6 +118,17 @@ object Dep {
         const val adapterRxJava2 = "com.squareup.retrofit2:adapter-rxjava2:2.9.0"
     }
 
+    @Suppress("unused")
+    object Kotpref {
+        const val kotpref = "com.chibatching.kotpref:kotpref:2.11.0"
+        const val gsonSupport = "com.chibatching.kotpref:gson-support:2.11.0"
+        const val enumSupport = "com.chibatching.kotpref:enum-support:2.11.0"
+        const val liveDataSupport = "com.chibatching.kotpref:livedata-support:2.13.1"
+    }
+
+    @Suppress("unused")
+    const val gson = "com.google.code.gson:gson:2.8.6"
+
     object File {
         const val imageWorker = "com.github.ihimanshurawat:ImageWorker:1.1.1"
     }

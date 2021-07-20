@@ -1,6 +1,9 @@
 package jp.co.paint.app
 
 import android.app.Application
+import com.chibatching.kotpref.Kotpref
+import com.chibatching.kotpref.gsonpref.gson
+import com.google.gson.GsonBuilder
 import dagger.hilt.android.HiltAndroidApp
 
 /**
@@ -15,6 +18,9 @@ class FitApp : Application() {
     }
 
     private fun init() {
-        // TODO Init here
+        Kotpref.init(this)
+        if (Kotpref.gson == null) {
+            Kotpref.gson = GsonBuilder().create()
+        }
     }
 }

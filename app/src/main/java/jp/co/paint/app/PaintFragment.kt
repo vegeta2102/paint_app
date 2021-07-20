@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -16,7 +17,12 @@ import com.himanshurawat.imageworker.Extension
 import com.himanshurawat.imageworker.ImageWorker
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.paint.DisplayInfoRepository
+import jp.co.paint.MovingBitmapRepository
+import jp.co.paint.TomatoStateStorePref
 import jp.co.paint.app.databinding.FragmentPaintBinding
+import jp.co.paint.core.extentions.margin
+import jp.co.paint.core.extentions.toDp
+import jp.co.paint.core.extentions.toPx
 import jp.co.paint.model.ScreenSize
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,6 +44,13 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
 
     @Inject
     lateinit var displayInfoRepository: DisplayInfoRepository
+
+    @Inject
+    lateinit var tomatoStateStorePref: TomatoStateStorePref
+
+    @Inject
+    lateinit var movingBitmapRepository: MovingBitmapRepository
+
     private var colorSelectedHolder = 0
     private var thicknessSelectedHolder = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,6 +61,9 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
             BottomSheetBehavior.from(bottomSheet).apply {
                 this.state = BottomSheetBehavior.STATE_COLLAPSED
                 addBottomSheetCallback(bottomSheetCallback)
+            }
+            tomatoStateStorePref.tomatoState?.let {
+                this.movableView.margin(left = it.posX, top = it.posY)
             }
             paintViewModel.bind(this.drawingView)
             observeViewModel(this)
@@ -98,6 +114,10 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
                     binding.drawingView.loadFile(it)
                 }
             }
+        }
+
+        movingBitmapRepository.isTouch.distinctUntilChanged().observe(viewLifecycleOwner) {
+            binding.movableView.margin(0F, 0F, 0F, 40F)
         }
     }
 
