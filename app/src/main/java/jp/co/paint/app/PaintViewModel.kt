@@ -2,13 +2,12 @@ package jp.co.paint.app
 
 import android.annotation.SuppressLint
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
+import androidx.lifecycle.*
 import jp.co.paint.TomatoStateStorePref
 import jp.co.paint.core.extentions.Visibility
 import jp.co.paint.model.TomatoState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Created by vegeta
@@ -44,10 +43,6 @@ class PaintViewModel @ViewModelInject constructor(
     private val _tomatoVisibility = MutableLiveData<Visibility>()
     val tomatoVisibility: LiveData<Visibility>
         get() = _tomatoVisibility
-
-    private val _requestRemoveTomato = MutableLiveData<Unit>()
-    val requestRemoveTomato: LiveData<Unit>
-        get() = _requestRemoveTomato
 
     fun bind(drawingView: DrawingView) {
         drawingViewHolder = drawingView
@@ -87,18 +82,18 @@ class PaintViewModel @ViewModelInject constructor(
     }
 
     fun loadImage() {
-        _requestLoadImage.postValue(Unit)
         tomatoStateStorePref.tomatoState?.let {
-            _tomatoVisibility.postValue(Visibility.VISIBLE)
+            _tomatoVisibility.value = Visibility.VISIBLE
         }
+        _requestLoadImage.postValue(Unit)
     }
 
     fun addTomato() {
         val view = drawingViewHolder ?: return
         tomatoStateStorePref.tomatoState = tomatoStateStorePref.tomatoState ?: TomatoState(
             isRemoved = false,
-            posX = view.width.div(2F),
-            posY = view.height.div(2F)
+            posX = view.width.div(2),
+            posY = view.height.div(2)
         )
         _tomatoVisibility.postValue(Visibility.VISIBLE)
     }

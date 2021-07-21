@@ -7,9 +7,9 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -63,9 +63,14 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
                 this.state = BottomSheetBehavior.STATE_COLLAPSED
                 addBottomSheetCallback(bottomSheetCallback)
             }
-            tomatoStateStorePref.tomatoState?.let {
+            // this.testLayout.margin(left = 100F, top = 10F)
+            /*val layoutParams = this.testLayout.layoutParams as CoordinatorLayout.LayoutParams
+            layoutParams.marginStart = 200F.toPx()
+            layoutParams.topMargin = 40F.toPx()
+            this.testLayout.layoutParams = layoutParams*/
+            /*tomatoStateStorePref.tomatoState?.let {
                 this.movableView.margin(left = it.posX, top = it.posY)
-            }
+            }*/
             paintViewModel.bind(this.drawingView)
             observeViewModel(this)
         }
@@ -119,10 +124,13 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
             tomatoVisibility.observe(viewLifecycleOwner) {
                 when (it) {
                     Visibility.VISIBLE -> {
-                        binding.movableView.margin(
-                            left = tomatoStateStorePref.tomatoState?.posX,
-                            top = tomatoStateStorePref.tomatoState?.posY,
+                        Log.d(
+                            "MovableMargin",
+                            "Left : ${tomatoStateStorePref.tomatoState?.posX}, Top: ${tomatoStateStorePref.tomatoState?.posY}"
                         )
+                        val left = tomatoStateStorePref.tomatoState?.posX?.toFloat()
+                        val top = tomatoStateStorePref.tomatoState?.posY?.toFloat()
+                        binding.movableView.margin(left = left, top = top)
                     }
                     else -> {
                         // Do nothing
