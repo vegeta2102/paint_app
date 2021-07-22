@@ -6,6 +6,9 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.view.marginLeft
+import androidx.core.view.marginStart
+import androidx.core.view.marginTop
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.WithFragmentBindings
 import jp.co.paint.MovingBitmapRepository
@@ -110,9 +113,15 @@ class MovableFrameLayoutButton @JvmOverloads constructor(
                             newY
                         )
                     view.animate().x(newX).y(newY).setDuration(0).start()
-                    Log.d("MovableStateOriginDP", "X: ${newX.toDp()}, Y: ${newY.toDp()}")
+                    Log.d(
+                        "MovableActionMove-toDP", "newX : ${newX.toDp()}, newY: ${newY.toDp()}"
+                    )
                     tomatoStateStorePref.tomatoState =
-                        TomatoState(posX = newX.toDp(), posY = newY.toDp(), isRemoved = false)
+                        TomatoState(
+                            posX = newX,
+                            posY = newY,
+                            isRemoved = false
+                        )
                     true
                 }
                 else -> {

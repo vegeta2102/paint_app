@@ -5,6 +5,6 @@ package jp.co.paint.model
  */
 data class TomatoState(
     val isRemoved: Boolean,
-    val posX: Int,
-    val posY: Int
+    val posX: Float,
+    val posY: Float
 )

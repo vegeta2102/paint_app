@@ -5,11 +5,13 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -121,26 +123,17 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
                 }
             }
 
-            tomatoVisibility.observe(viewLifecycleOwner) {
-                when (it) {
-                    Visibility.VISIBLE -> {
-                        Log.d(
-                            "MovableMargin",
-                            "Left : ${tomatoStateStorePref.tomatoState?.posX}, Top: ${tomatoStateStorePref.tomatoState?.posY}"
-                        )
-                        val left = tomatoStateStorePref.tomatoState?.posX?.toFloat()
-                        val top = tomatoStateStorePref.tomatoState?.posY?.toFloat()
-                        binding.movableView.margin(left = left, top = top)
-                    }
-                    else -> {
-                        // Do nothing
-                    }
-                }
+            firstLoad.observe(viewLifecycleOwner) {
+                val left = it.posX
+                val top = it.posY
+                binding.movableView.margin(left = left, top = top)
             }
         }
 
-        movingBitmapRepository.isTouch.observe(viewLifecycleOwner) {
+        movingBitmapRepository.isTouch.distinctUntilChanged().observe(viewLifecycleOwner) {
             binding.movableView.margin(0F, 0F, 0F, 40F.toDp().toFloat())
+            val layoutParams = binding.movableView.layoutParams as ViewGroup.MarginLayoutParams
+
         }
     }
 

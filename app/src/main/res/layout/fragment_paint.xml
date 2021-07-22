@@ -183,39 +183,10 @@
             android:id="@+id/movableView"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:background="@drawable/ic_tomato"
             bind:visibility="@{viewModel.tomatoVisibility}">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_tomato" />
         </jp.co.paint.app.view.MovableFrameLayoutButton>
-
-        <!--<jp.co.paint.app.view.MovableFrameLayoutButton
-            android:id="@+id/testLayout"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            bind:visibility="@{viewModel.tomatoVisibility}">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_tomato" />
-        </jp.co.paint.app.view.MovableFrameLayoutButton>
-
-        <jp.co.paint.app.view.MovableFrameLayoutButton
-            android:id="@+id/testLayout2"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="20dp"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            bind:visibility="@{viewModel.tomatoVisibility}">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_tomato" />
-        </jp.co.paint.app.view.MovableFrameLayoutButton>-->
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

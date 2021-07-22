@@ -97,6 +97,7 @@ class DrawingView @JvmOverloads constructor(
         val touchX = event.x
         val touchY = event.y
         Log.d("TouchRaw", "$rawX : $rawY")
+        Log.d("Touch", "$touchX : $touchY")
         val screenH = displayInfoRepository.latestData?.h ?: return false
         val offset = displayInfoRepository.latestData?.offset ?: return false
         if (screenH - offset < touchY) {

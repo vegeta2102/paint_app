@@ -1,6 +1,10 @@
 package jp.co.paint.app
 
+import android.app.Activity
+import android.graphics.Point
+import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -13,11 +17,47 @@ import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.paint.DisplayInfoRepository
 import jp.co.paint.app.databinding.ActivityMainBinding
+import jp.co.paint.core.extentions.toPx
 import jp.co.paint.model.ScreenSize
 import jp.co.paint.startup.StartupViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.roundToInt
+
+val Activity.displayMetrics: DisplayMetrics
+    get() {
+        // display metrics is a structure describing general information
+        // about a display, such as its size, density, and font scaling
+        val displayMetrics = DisplayMetrics()
+
+        if (Build.VERSION.SDK_INT >= 30) {
+            display?.apply {
+                getRealMetrics(displayMetrics)
+            }
+        } else {
+            // getMetrics() method was deprecated in api level 30
+            windowManager.defaultDisplay.getMetrics(displayMetrics)
+        }
+
+        return displayMetrics
+    }
+
+
+// extension property to get screen width and height in dp
+val Activity.screenSizeInDp: Point
+    get() {
+        val point = Point()
+        displayMetrics.apply {
+            // screen width in dp
+            point.x = (widthPixels / density).roundToInt()
+
+            // screen height in dp
+            point.y = (heightPixels / density).roundToInt()
+        }
+
+        return point
+    }
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -70,6 +110,7 @@ class MainActivity : AppCompatActivity() {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         Log.d("TouchScreen", "${main_layout.width}, ${main_layout.height}")
+        Log.d("ScreenSize", "${screenSizeInDp.x} - ${screenSizeInDp.y}")
         lifecycleScope.launch {
             displayInfoRepository.emit(ScreenSize(w = main_layout.width, h = main_layout.height))
         }
