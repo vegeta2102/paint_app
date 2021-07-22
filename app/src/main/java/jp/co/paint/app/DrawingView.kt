@@ -78,7 +78,6 @@ class DrawingView @JvmOverloads constructor(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        Log.d("onSizeChanged", "$w, $h, $oldw, $oldh")
         canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         drawCanvas = Canvas(canvasBitmap!!)
     }
@@ -92,12 +91,8 @@ class DrawingView @JvmOverloads constructor(
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         // X and Y position of user touch.
-        val rawX = event.rawX
-        val rawY = event.rawY
         val touchX = event.x
         val touchY = event.y
-        Log.d("TouchRaw", "$rawX : $rawY")
-        Log.d("Touch", "$touchX : $touchY")
         val screenH = displayInfoRepository.latestData?.h ?: return false
         val offset = displayInfoRepository.latestData?.offset ?: return false
         if (screenH - offset < touchY) {

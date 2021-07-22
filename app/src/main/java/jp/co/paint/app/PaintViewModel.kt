@@ -91,7 +91,6 @@ class PaintViewModel @ViewModelInject constructor(
 
     fun loadImage() {
         tomatoStateStorePref.tomatoState?.let {
-            Log.d("loadImage", "$it")
             _tomatoVisibility.value = Visibility.VISIBLE
         }
         _requestLoadImage.postValue(Unit)

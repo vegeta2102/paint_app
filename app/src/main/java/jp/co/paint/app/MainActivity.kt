@@ -93,7 +93,6 @@ class MainActivity : AppCompatActivity() {
         }
         with(viewModel) {
             initFinished.observe(this@MainActivity) {
-                Log.d(TAG, "init event")
                 navController.navigate(R.id.action_to_main)
             }
         }
@@ -109,8 +108,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        Log.d("TouchScreen", "${main_layout.width}, ${main_layout.height}")
-        Log.d("ScreenSize", "${screenSizeInDp.x} - ${screenSizeInDp.y}")
         lifecycleScope.launch {
             displayInfoRepository.emit(ScreenSize(w = main_layout.width, h = main_layout.height))
         }

@@ -11,6 +11,7 @@ import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.WithFragmentBindings
+import jp.co.paint.DisplayInfoRepository
 import jp.co.paint.MovingBitmapRepository
 import jp.co.paint.TomatoStateStorePref
 import jp.co.paint.core.extentions.toDp
@@ -42,6 +43,9 @@ class MovableFrameLayoutButton @JvmOverloads constructor(
 
     @Inject
     lateinit var movingBitmapRepository: MovingBitmapRepository
+
+    @Inject
+    lateinit var displayInfoRepository: DisplayInfoRepository
 
     init {
         setOnTouchListener(onTouchListener())
@@ -99,7 +103,13 @@ class MovableFrameLayoutButton @JvmOverloads constructor(
                     val viewHeight: Int = view.height
                     val viewParent: View = view.parent as View
                     val parentWidth: Int = viewParent.width
-                    val parentHeight: Int = viewParent.height - 40F.toPx()
+                    var offset = displayInfoRepository.latestData?.offset ?: 40
+                    offset = if (offset > 40) {
+                        offset
+                    } else {
+                        offset + viewHeight.div(2)
+                    }
+                    val parentHeight: Int = viewParent.height - offset
                     var newX = motionEvent.rawX + dX
                     newX = layoutParams.leftMargin.toFloat().coerceAtLeast(newX)
                     newX =
@@ -113,9 +123,6 @@ class MovableFrameLayoutButton @JvmOverloads constructor(
                             newY
                         )
                     view.animate().x(newX).y(newY).setDuration(0).start()
-                    Log.d(
-                        "MovableActionMove-toDP", "newX : ${newX.toDp()}, newY: ${newY.toDp()}"
-                    )
                     tomatoStateStorePref.tomatoState =
                         TomatoState(
                             posX = newX,

@@ -65,14 +65,6 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
                 this.state = BottomSheetBehavior.STATE_COLLAPSED
                 addBottomSheetCallback(bottomSheetCallback)
             }
-            // this.testLayout.margin(left = 100F, top = 10F)
-            /*val layoutParams = this.testLayout.layoutParams as CoordinatorLayout.LayoutParams
-            layoutParams.marginStart = 200F.toPx()
-            layoutParams.topMargin = 40F.toPx()
-            this.testLayout.layoutParams = layoutParams*/
-            /*tomatoStateStorePref.tomatoState?.let {
-                this.movableView.margin(left = it.posX, top = it.posY)
-            }*/
             paintViewModel.bind(this.drawingView)
             observeViewModel(this)
         }
@@ -82,7 +74,6 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
 
         override fun onSlide(bottomSheet: View, slideOffset: Float) {
             val bottomMargin = (40 + (bottomSheet.height - 40) * slideOffset).toInt()
-            Log.d("TouchBottomMargin", "$bottomMargin")
             lifecycleScope.launch {
                 displayInfoRepository.latestData?.let {
                     displayInfoRepository.emit(
@@ -127,21 +118,6 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
                 val left = it.posX
                 val top = it.posY
                 binding.movableView.margin(left = left, top = top)
-            }
-            tomatoVisibility.observe(viewLifecycleOwner) {
-                when (it) {
-                    Visibility.VISIBLE -> {
-                        val layoutParams =
-                            binding.movableView.layoutParams as ViewGroup.MarginLayoutParams
-                        Log.d(
-                            "MovableBefore",
-                            "${layoutParams.leftMargin}, ${layoutParams.topMargin}, ${layoutParams.rightMargin}, ${layoutParams.bottomMargin}"
-                        )
-                    }
-                    else -> {
-                        Log.d("Movable", "Invisible")
-                    }
-                }
             }
         }
 
