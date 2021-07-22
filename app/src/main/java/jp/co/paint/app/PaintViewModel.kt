@@ -71,7 +71,7 @@ class PaintViewModel @ViewModelInject constructor(
     fun startNew() {
         cancelErase()
         drawingViewHolder?.startNew()
-        _tomatoVisibility.postValue(Visibility.GONE)
+        _tomatoVisibility.postValue(Visibility.INVISIBLE)
         _guidanceText.postValue("ペイント")
     }
 
@@ -108,7 +108,7 @@ class PaintViewModel @ViewModelInject constructor(
     }
 
     fun removeTomato() {
-        _tomatoVisibility.postValue(Visibility.GONE)
+        _tomatoVisibility.postValue(Visibility.INVISIBLE)
     }
 
     override fun onCleared() {

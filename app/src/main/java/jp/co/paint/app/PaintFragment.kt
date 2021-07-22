@@ -128,12 +128,25 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
                 val top = it.posY
                 binding.movableView.margin(left = left, top = top)
             }
+            tomatoVisibility.observe(viewLifecycleOwner) {
+                when (it) {
+                    Visibility.VISIBLE -> {
+                        val layoutParams =
+                            binding.movableView.layoutParams as ViewGroup.MarginLayoutParams
+                        Log.d(
+                            "MovableBefore",
+                            "${layoutParams.leftMargin}, ${layoutParams.topMargin}, ${layoutParams.rightMargin}, ${layoutParams.bottomMargin}"
+                        )
+                    }
+                    else -> {
+                        Log.d("Movable", "Invisible")
+                    }
+                }
+            }
         }
 
-        movingBitmapRepository.isTouch.distinctUntilChanged().observe(viewLifecycleOwner) {
+        movingBitmapRepository.isTouch.observe(viewLifecycleOwner) {
             binding.movableView.margin(0F, 0F, 0F, 40F.toDp().toFloat())
-            val layoutParams = binding.movableView.layoutParams as ViewGroup.MarginLayoutParams
-
         }
     }
 
