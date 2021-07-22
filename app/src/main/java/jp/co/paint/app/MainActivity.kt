@@ -5,7 +5,6 @@ import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +16,6 @@ import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.paint.DisplayInfoRepository
 import jp.co.paint.app.databinding.ActivityMainBinding
-import jp.co.paint.core.extentions.toPx
 import jp.co.paint.model.ScreenSize
 import jp.co.paint.startup.StartupViewModel
 import kotlinx.android.synthetic.main.activity_main.*

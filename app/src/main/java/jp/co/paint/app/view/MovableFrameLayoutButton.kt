@@ -2,20 +2,14 @@ package jp.co.paint.app.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
-import androidx.core.view.marginLeft
-import androidx.core.view.marginStart
-import androidx.core.view.marginTop
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.WithFragmentBindings
 import jp.co.paint.DisplayInfoRepository
 import jp.co.paint.MovingBitmapRepository
 import jp.co.paint.TomatoStateStorePref
-import jp.co.paint.core.extentions.toDp
-import jp.co.paint.core.extentions.toPx
 import jp.co.paint.model.TomatoState
 import javax.inject.Inject
 import kotlin.math.abs

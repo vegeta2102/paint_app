@@ -5,13 +5,10 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -22,14 +19,11 @@ import jp.co.paint.DisplayInfoRepository
 import jp.co.paint.MovingBitmapRepository
 import jp.co.paint.TomatoStateStorePref
 import jp.co.paint.app.databinding.FragmentPaintBinding
-import jp.co.paint.core.extentions.Visibility
 import jp.co.paint.core.extentions.margin
 import jp.co.paint.core.extentions.toDp
-import jp.co.paint.core.extentions.toPx
 import jp.co.paint.model.ScreenSize
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.Exception
 
 
 /**
