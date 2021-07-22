@@ -22,7 +22,7 @@ class PaintViewModel @ViewModelInject constructor(
 
     private val _guidanceText = MutableLiveData<String?>()
     val guidanceText: LiveData<String?> = _guidanceText.map {
-        it.plus("選択中")
+        it.plus("できる")
     }
 
     private val _requestChangeColor = MutableLiveData<Unit>()
