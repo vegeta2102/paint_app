@@ -157,7 +157,7 @@ class DrawingView @JvmOverloads constructor(
             //drawPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         } else {
             drawPaint.color = previousColor
-            // drawPaint.xfermode = null
+            drawPaint.xfermode = null
         }
     }
 
