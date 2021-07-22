@@ -126,8 +126,7 @@ class MovableFrameLayoutButton @JvmOverloads constructor(
                     tomatoStateStorePref.tomatoState =
                         TomatoState(
                             posX = newX,
-                            posY = newY,
-                            isRemoved = false
+                            posY = newY
                         )
                     true
                 }

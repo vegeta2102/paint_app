@@ -47,7 +47,7 @@ class PaintViewModel @ViewModelInject constructor(
         get() = _tomatoVisibility
 
     private val _firstLoad = MutableLiveData<TomatoState>()
-    val firstLoad : LiveData<TomatoState> = _firstLoad
+    val firstLoad: LiveData<TomatoState> = _firstLoad
 
     fun bind(drawingView: DrawingView) {
         drawingViewHolder = drawingView
@@ -98,11 +98,13 @@ class PaintViewModel @ViewModelInject constructor(
 
     fun addTomato() {
         val view = drawingViewHolder ?: return
-        tomatoStateStorePref.tomatoState = tomatoStateStorePref.tomatoState ?: TomatoState(
-            isRemoved = false,
-            posX = view.width.div(2).toFloat(),
-            posY = view.height.div(2).toFloat()
-        )
+        if (tomatoStateStorePref.tomatoState == null) {
+            tomatoStateStorePref.tomatoState = TomatoState(
+                posX = view.width.div(2).toFloat(),
+                posY = view.height.div(2).toFloat()
+            )
+            _firstLoad.postValue(tomatoStateStorePref.tomatoState)
+        }
         _tomatoVisibility.postValue(Visibility.VISIBLE)
     }
 
