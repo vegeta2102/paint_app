@@ -158,11 +158,16 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
     }
 
     private fun loadBitmapFromStorage(): Bitmap? {
-        return ImageWorker.from(requireContext())
-            .directory(PATH)
-            .setFileName(FILE_NAME)
-            .withExtension(Extension.PNG)
-            .load()
+        return try {
+            ImageWorker.from(requireContext())
+                .directory(PATH)
+                .setFileName(FILE_NAME)
+                .withExtension(Extension.PNG)
+                .load()
+        } catch (e: Exception) {
+            Log.e("Load failure", "$e")
+            null
+        }
     }
 
     private fun getBitmapFromView(view: View): Bitmap? {

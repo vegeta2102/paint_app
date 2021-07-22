@@ -6,8 +6,6 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
-import androidx.core.view.marginLeft
-import androidx.core.view.marginTop
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.WithFragmentBindings
 import jp.co.paint.MovingBitmapRepository
@@ -46,7 +44,7 @@ class MovableFrameLayoutButton @JvmOverloads constructor(
         setOnTouchListener(onTouchListener())
     }
 
-    private fun onTouchListener() = object : View.OnTouchListener {
+    private fun onTouchListener() = object : OnTouchListener {
         private val MIN_CLICK_DURATION = 200L
         private var startClickTime: Long = 0
         private var longClickActive = false

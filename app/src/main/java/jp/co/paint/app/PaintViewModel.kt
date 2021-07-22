@@ -99,7 +99,6 @@ class PaintViewModel @ViewModelInject constructor(
     }
 
     fun removeTomato() {
-        tomatoStateStorePref.tomatoState = tomatoStateStorePref.tomatoState
         _tomatoVisibility.postValue(Visibility.GONE)
     }
 
