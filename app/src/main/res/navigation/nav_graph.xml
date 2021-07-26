@@ -15,6 +15,14 @@
     <fragment
         android:id="@+id/paintFragment"
         android:name="jp.co.paint.app.PaintFragment">
+        <action
+            android:id="@+id/action_to_progress"
+            app:destination="@id/progressFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/progressFragment"
+        android:name="jp.co.paint.app.ProgressFragment"
+        android:label="ProgressFragment" />
 
 </navigation>

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import jp.co.paint.TomatoStateStorePref
+import jp.co.paint.core.extentions.SingleLiveEvent
 import jp.co.paint.core.extentions.Visibility
 import jp.co.paint.model.TomatoState
 
@@ -17,44 +18,52 @@ class PaintViewModel @ViewModelInject constructor(
     private val tomatoStateStorePref: TomatoStateStorePref
 ) : ViewModel() {
 
+    enum class State {
+        INIT,
+        NONE
+    }
+
     @SuppressLint("StaticFieldLeak")
     private var drawingViewHolder: DrawingView? = null
 
-    private val _guidanceText = MutableLiveData<String?>()
+    private val _guidanceText = SingleLiveEvent<String?>()
     val guidanceText: LiveData<String?> = _guidanceText.map {
         it.plus("できる")
     }
 
-    private val _requestChangeColor = MutableLiveData<Unit>()
+    private val _requestChangeColor = SingleLiveEvent<Unit>()
     val requestChangeColor: LiveData<Unit>
         get() = _requestChangeColor
 
-    private val _requestChangeThickness = MutableLiveData<Unit>()
+    private val _requestChangeThickness = SingleLiveEvent<Unit>()
     val requestChangeThickness: LiveData<Unit>
         get() = _requestChangeThickness
 
-    private val _requestSaveImage = MutableLiveData<Unit>()
+    private val _requestSaveImage = SingleLiveEvent<Unit>()
     val requestSaveImage: LiveData<Unit>
         get() = _requestSaveImage
 
-    private val _requestLoadImage = MutableLiveData<Unit>()
-    val requestLoadImage: LiveData<Unit>
+    private val _requestLoadImage = SingleLiveEvent<State>()
+    val requestLoadImage: LiveData<State>
         get() = _requestLoadImage
 
-    private val _tomatoVisibility = MutableLiveData<Visibility>()
+    private val _tomatoVisibility = SingleLiveEvent<Visibility>()
     val tomatoVisibility: LiveData<Visibility>
         get() = _tomatoVisibility
 
-    private val _firstLoad = MutableLiveData<TomatoState>()
+    private val _firstLoad = SingleLiveEvent<TomatoState>()
     val firstLoad: LiveData<TomatoState> = _firstLoad
 
     fun bind(drawingView: DrawingView) {
         drawingViewHolder = drawingView
         _guidanceText.postValue("ペイント")
         tomatoStateStorePref.tomatoState?.let {
+            _tomatoVisibility.postValue(Visibility.VISIBLE)
+        }
+        tomatoStateStorePref.tomatoState?.let {
             _firstLoad.postValue(it)
         }
-        loadImage()
+        _requestLoadImage.postValue(State.INIT)
     }
 
 
@@ -89,10 +98,7 @@ class PaintViewModel @ViewModelInject constructor(
     }
 
     fun loadImage() {
-        tomatoStateStorePref.tomatoState?.let {
-            _tomatoVisibility.value = Visibility.VISIBLE
-        }
-        _requestLoadImage.postValue(Unit)
+        _requestLoadImage.postValue(State.NONE)
     }
 
     fun addTomato() {

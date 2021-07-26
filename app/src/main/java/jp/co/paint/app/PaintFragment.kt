@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.himanshurawat.imageworker.Extension
 import com.himanshurawat.imageworker.ImageWorker
@@ -37,6 +39,9 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
         const val FILE_NAME = "paint_20210730"
     }
 
+    private val navController: NavController by lazy {
+        findNavController()
+    }
     private val paintViewModel: PaintViewModel by viewModels()
 
     @Inject
@@ -102,9 +107,13 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
                 }
             }
 
-            requestLoadImage.observe(viewLifecycleOwner) {
-                loadBitmapFromStorage()?.let {
-                    binding.drawingView.loadFile(it)
+            requestLoadImage.observe(viewLifecycleOwner) { state ->
+                if (state == PaintViewModel.State.NONE) {
+                    navController.navigate(R.id.progressFragment)
+                } else {
+                    loadBitmapFromStorage()?.let {
+                        binding.drawingView.loadFile(it)
+                    }
                 }
             }
 
