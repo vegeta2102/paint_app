@@ -87,11 +87,13 @@ class PaintViewModel @ViewModelInject constructor(
 
     fun saveImage() {
         _requestSaveImage.postValue(Unit)
+        val isRemoved = _tomatoVisibility.value != Visibility.VISIBLE
+        tomatoStateStorePref.save(isRemoved)
     }
 
     fun loadImage() {
         tomatoStateStorePref.tomatoState?.let {
-            _tomatoVisibility.value = Visibility.VISIBLE
+            _tomatoVisibility.value = if (it.isRemoved) Visibility.INVISIBLE else Visibility.VISIBLE
         }
         _requestLoadImage.postValue(Unit)
     }

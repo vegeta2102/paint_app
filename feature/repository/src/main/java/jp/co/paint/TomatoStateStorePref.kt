@@ -13,4 +13,8 @@ class TomatoStateStorePref @Inject constructor() : KotprefModel() {
     override val kotprefName: String = "tomato_pref"
 
     var tomatoState: TomatoState? by gsonNullablePref(default = null)
+
+    fun save(isRemoved: Boolean) {
+        tomatoState = tomatoState?.copy(isRemoved = isRemoved)
+    }
 }
