@@ -1,5 +1,6 @@
 package jp.co.paint.app
 
+import android.Manifest
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Bundle
@@ -23,12 +24,16 @@ import jp.co.paint.core.extentions.margin
 import jp.co.paint.core.extentions.toDp
 import jp.co.paint.model.ScreenSize
 import kotlinx.coroutines.launch
+import permissions.dispatcher.NeedsPermission
+import permissions.dispatcher.OnPermissionDenied
+import permissions.dispatcher.RuntimePermissions
 import javax.inject.Inject
 
 
 /**
  * Created by vegeta
  */
+@RuntimePermissions
 @AndroidEntryPoint
 class PaintFragment : Fragment(R.layout.fragment_paint) {
 
@@ -50,6 +55,40 @@ class PaintFragment : Fragment(R.layout.fragment_paint) {
 
     private var colorSelectedHolder = 0
     private var thicknessSelectedHolder = 0
+
+    override fun onStart() {
+        super.onStart()
+        requestPermissionWithPermissionCheck()
+    }
+
+    @NeedsPermission(
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+    fun requestPermission() {
+        // パーミッションが許可されていれば起動処理に遷移
+        // initViewModel()
+    }
+
+    @OnPermissionDenied(
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+    fun onPermissionDenied() {
+        // 拒否された場合は再度パーミッション要求する
+        // DeviceOwnerがかかっていると権限ダイアログが表示されないため実質開発向け
+        requestPermissionWithPermissionCheck()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        onRequestPermissionsResult(requestCode, grantResults)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FragmentPaintBinding.bind(view).apply {

@@ -52,7 +52,6 @@ android {
 
 dependencies {
 
-    implementation project(":feature:startup")
     implementation project(":feature:model")
     implementation project(":feature:repository")
     implementation project(":feature:core")

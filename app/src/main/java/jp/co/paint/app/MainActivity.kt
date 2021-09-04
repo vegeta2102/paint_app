@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.co.paint.DisplayInfoRepository
 import jp.co.paint.app.databinding.ActivityMainBinding
 import jp.co.paint.model.ScreenSize
-import jp.co.paint.startup.StartupViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -65,7 +64,6 @@ class MainActivity : AppCompatActivity() {
         val TAG = MainActivity::class.simpleName
     }
 
-    private val viewModel: StartupViewModel by viewModels()
     private val mainViewModel: MainViewModel by viewModels()
 
     private lateinit var viewDataBinding: ActivityMainBinding
@@ -88,11 +86,6 @@ class MainActivity : AppCompatActivity() {
         ).apply {
             lifecycleOwner = this@MainActivity
             viewModel = this@MainActivity.mainViewModel
-        }
-        with(viewModel) {
-            initFinished.observe(this@MainActivity) {
-                navController.navigate(R.id.action_to_main)
-            }
         }
         with(mainViewModel) {
             requestDialogMessage.observe(this@MainActivity) {

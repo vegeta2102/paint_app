@@ -2,15 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/startupFragment">
-
-    <fragment
-        android:id="@+id/startupFragment"
-        android:name="jp.co.paint.startup.StartupFragment">
-        <action
-            android:id="@+id/action_to_main"
-            app:destination="@id/paintFragment" />
-    </fragment>
+    app:startDestination="@id/paintFragment">
 
     <fragment
         android:id="@+id/paintFragment"
